@@ -4,7 +4,8 @@ import { WelcomePageComponent } from './components/pages/welcome-page/welcome-pa
 
 
 const routes: Routes = [
-  { path: '', component: WelcomePageComponent }
+  { path: '', component: WelcomePageComponent },
+  { path: 'auth', loadChildren: () => import('./auth/auth.module').then(value => value.AuthModule) }
 ];
 
 @NgModule({

@@ -1,0 +1,75 @@
+<div class="signup-page">
+  <header class="header">
+    <div class="logo">
+      <a routerLink="/">
+        <img src="../../../../../assets/images/trello-logo-blue.svg" alt="Trello logo">
+      </a>
+    </div>
+  </header>
+
+  <div class="signup-section">
+    <div class="title">Account registration</div>
+
+    <div class="signup-form">
+      <div class="alert" *ngIf="authService.error$ | async as message">
+        <small>{{ message }}</small>
+      </div>
+
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-control">
+          <input type="email" placeholder="Enter Email" formControlName="email">
+        </div>
+        <div class="error" *ngIf="form.get('email').invalid && form.get('email').touched">
+          <small *ngIf="form.get('email').hasError('required')">The email is a required field</small>
+          <small *ngIf="form.get('email').hasError('email')">Incorrect email address</small>
+        </div>
+
+        <div class="form-control">
+          <input type="text" placeholder="Enter full name" formControlName="username">
+        </div>
+        <div class="error" *ngIf="form.get('username').invalid && form.get('username').touched">
+          <small *ngIf="form.get('username').hasError('required')">The name is a required field</small>
+          <small *ngIf="form.get('username').hasError('minlength')">
+            Name must be at least {{ form.get('username').getError('minlength').requiredLength }} characters long
+          </small>
+        </div>
+
+        <div class="form-control">
+          <input type="password" placeholder="Create password" formControlName="password">
+        </div>
+        <div class="error" *ngIf="form.get('password').invalid && form.get('password').touched">
+          <small *ngIf="form.get('password').hasError('required')">The password is a required field</small>
+          <small *ngIf="form.get('password').hasError('minlength')">
+            Password must be at least {{ form.get('password').getError('minlength').requiredLength }} characters long
+          </small>
+        </div>
+
+        <button *ngIf="!showSuccess; else info" type="submit" [disabled]="form.invalid || submitting">Sign up</button>
+        <ng-template #info>
+          <div class="info" @showHide>
+            <div>A confirmation email was sent to the {{ userEmail }}</div>
+            <button type="button" (click)="goHome()">Ok</button>
+          </div>
+        </ng-template>
+
+      </form>
+      <div class="social-login" *ngIf="!showSuccess">
+        <div class="or">or</div>
+        <button class="social-btn">
+          <img
+            src="https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.53/static/media/google-logo.c21ca9d1.svg"
+            alt=""
+            style="height: 18px;
+              margin-right: 8px;
+              vertical-align: middle;
+              width: 18px;">
+          <span>Войти с помощью Google</span>
+        </button>
+      </div>
+      <div class="login">
+        <a routerLink="/auth/login">Already have an account? Login</a>
+      </div>
+    </div>
+
+  </div>
+</div>
