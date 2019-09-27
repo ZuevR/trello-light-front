@@ -1,0 +1,16 @@
+<section class="boards-section">
+  <div class="container">
+    <div class="section-inner">
+      <div class="menu"></div>
+
+      <div class="content">
+        <div class="boards">
+          <a class="item" *ngFor="let board of boards" [routerLink]="['/boards', board.id]">
+            <h1>{{ board.title }}</h1>
+          </a>
+          <div class="item add-button" (click)="openModal()">Create board</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

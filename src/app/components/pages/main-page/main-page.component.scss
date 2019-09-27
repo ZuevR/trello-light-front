@@ -1,0 +1,58 @@
+.boards-section {
+  margin-top: 45px;
+
+  .section-inner {
+    display: flex;
+
+    .menu {
+      width: 25%;
+    }
+
+    .content {
+      width: 75%;
+    }
+
+  }
+
+  .boards {
+    display: flex;
+    flex-wrap: wrap;
+
+    .item {
+      width: 165px;
+      height: 80px;
+      margin: 15px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: rgb(0, 121, 191);
+      transition: all .2s linear;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: 500;
+      color: #ffffff;
+
+      &.add-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(9,30,66,.04);
+        color: #0079bf;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: 400;
+
+        &:hover {
+          background-color: rgba(9, 30, 66, .08);
+        }
+
+        &:active {
+          background-color: #e4f0f6;
+        }
+      }
+
+      &:hover {
+        background-color: #185b8e;
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <input type="text" formControlName="title">
+    <button [disabled]="form.invalid" (click)="setBoardTitle()">Create board</button>
+  </form>
+</div>

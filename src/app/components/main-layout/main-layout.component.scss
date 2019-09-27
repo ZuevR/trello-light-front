@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  background: #026aa7;
+  padding: 4px;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    border-radius: 3px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    background-color: hsla(0, 0%, 100%, .3);
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 600;
+    color: #fff;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 8px;
+    transition: .2s ease;
+
+    &:hover {
+      background-color: hsla(0, 0%, 100%, .2);
+    }
+
+    &:active {
+      background-color: hsla(0, 0%, 100%, .1);
+    }
+  }
+
+  .logo {
+
+    img {
+      display: block;
+      max-height: 32px;
+    }
+  }
+}
