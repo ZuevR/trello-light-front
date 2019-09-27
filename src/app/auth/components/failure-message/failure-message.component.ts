@@ -1,15 +1,23 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 import { AuthResponse } from '../../../shared/interfaces';
 import { AuthService } from '../../../shared/services/auth.service';
 
-
 @Component({
   selector: 'app-failure-message',
   templateUrl: './failure-message.component.html',
-  styleUrls: ['./failure-message.component.scss']
+  styleUrls: ['./failure-message.component.scss'],
+  animations: [
+    trigger('showHide', [
+      transition('void => *', [
+        style({ opacity: 0 }),
+        animate(1000)
+      ])
+    ])
+  ]
 })
 export class FailureMessageComponent implements OnInit {
 
@@ -35,6 +43,8 @@ export class FailureMessageComponent implements OnInit {
     this.authService.requestNewEmail(this.data.id).subscribe((response: AuthResponse) => {
       this.userEmail = response.email;
       this.submit = true;
+    }, error => {
+      console.log(error);
     });
   }
 

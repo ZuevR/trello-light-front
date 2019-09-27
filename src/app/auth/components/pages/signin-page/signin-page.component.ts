@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Params } from '@angular/router';
 
 import { AuthService } from '../../../../shared/services/auth.service';
 import { SuccessMessageComponent } from '../../success-message/success-message.component';
 import { FailureMessageComponent } from '../../failure-message/failure-message.component';
+import { AuthResponse, User } from '../../../../shared/interfaces';
 
 @Component({
   selector: 'app-signin-page',
@@ -19,6 +20,7 @@ export class SigninPageComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
+    private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) {
@@ -30,19 +32,43 @@ export class SigninPageComponent implements OnInit {
       const userId = +params.userId;
       this.openDialog(regStatus, userId);
     });
+
+    this.form = new FormGroup({
+      email: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.required)
+    });
   }
 
   openDialog(status: string, id: number): void {
-    let dialogRef;
     if (status === 'true') {
-      dialogRef = this.dialog.open(SuccessMessageComponent, {
+      this.dialog.open(SuccessMessageComponent, {
         panelClass: 'my-panel-success'
       });
     } else if (status === 'false') {
-      dialogRef = this.dialog.open(FailureMessageComponent, {
+      this.dialog.open(FailureMessageComponent, {
         panelClass: 'my-panel-failure',
         data: { id }
       });
     }
+  }
+
+  submit() {
+    if (this.form.invalid) {
+      return;
+    }
+    this.submitting = true;
+
+    const user: User = {
+      email: this.form.get('email').value,
+      password: this.form.get('password').value
+    };
+
+    this.authService.login(user).subscribe((response: AuthResponse) => {
+      this.form.reset();
+      this.router.navigate([`/boards`]);
+      this.submitting = false;
+    }, () => {
+      this.submitting = false;
+    });
   }
 }

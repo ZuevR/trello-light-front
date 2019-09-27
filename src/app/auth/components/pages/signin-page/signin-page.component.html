@@ -6,4 +6,32 @@
       </a>
     </div>
   </header>
+
+  <section class="login-section">
+
+    <div class="title">Login</div>
+    <div class="error" *ngIf="authService.error$ | async as message">
+      {{ message }}
+    </div>
+
+    <div class="signup-form">
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-control">
+          <input type="email" placeholder="Enter Email" formControlName="email">
+        </div>
+        <div class="error" *ngIf="form.get('email').invalid && form.get('email').touched">
+          <small *ngIf="form.get('email').hasError('required')">The email is a required field</small>
+        </div>
+
+        <div class="form-control">
+          <input type="password" placeholder="Create password" formControlName="password">
+        </div>
+        <div class="error" *ngIf="form.get('password').invalid && form.get('password').touched">
+          <small *ngIf="form.get('password').hasError('required')">The password is a required field</small>
+        </div>
+
+        <button type="submit" [disabled]="form.invalid || submitting">Login</button>
+      </form>
+    </div>
+  </section>
 </div>

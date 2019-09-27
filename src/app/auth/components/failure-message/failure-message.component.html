@@ -10,7 +10,7 @@
 </div>
 
 <ng-template #info>
-  <div class="info">
+  <div class="info" @showHide>
     <div>A confirmation email was sent to the {{ userEmail }}</div>
     <button type="button" class="btn-yes" (click)="closeInfo()">Ok</button>
   </div>
