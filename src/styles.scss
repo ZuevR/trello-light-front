@@ -79,3 +79,23 @@ h1, h2, h3, h4, h5, h6, p, div, span, a, img {
     background-color: rgba(255, 255, 255, 0.25);
   }
 }
+
+.my-panel-success {
+  mat-dialog-container {
+    background: linear-gradient(180deg, #42548e 0%, #6b668c 100%);
+    max-width: 500px;
+  }
+}
+
+.my-panel-failure {
+
+  mat-dialog-container {
+    border: 1px solid red;
+    max-width: 500px;
+  }
+
+  .mat-dialog-actions {
+    justify-content: center;
+  }
+}
+

@@ -1,0 +1,17 @@
+<h1 mat-dialog-title *ngIf="!submit">Registration confirmation email is out of date!!</h1>
+<div mat-dialog-content *ngIf="!submit">
+  <h4>Send a new letter?</h4>
+</div>
+<div mat-dialog-actions>
+  <div class="buttons" *ngIf="!submit; else info">
+    <button class="btn-yes" (click)="sendVerificationEmail()">Yes</button>
+    <button class="btn-no" (click)="closeDialog()">No</button>
+  </div>
+</div>
+
+<ng-template #info>
+  <div class="info">
+    <div>A confirmation email was sent to the {{ userEmail }}</div>
+    <button type="button" class="btn-yes" (click)="closeInfo()">Ok</button>
+  </div>
+</ng-template>
