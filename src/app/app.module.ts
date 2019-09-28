@@ -11,6 +11,9 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { MainPageComponent } from './components/pages/main-page/main-page.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { ModalNewBoardComponent } from './components/modal-new-board/modal-new-board.component';
+import { BoardPageComponent } from './components/pages/board-page/board-page.component';
+import { BoardTitleComponent } from './components/board-title/board-title.component';
+import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { ModalNewBoardComponent } from './components/modal-new-board/modal-new-b
     WelcomePageComponent,
     MainLayoutComponent,
     MainPageComponent,
-    ModalNewBoardComponent
+    ModalNewBoardComponent,
+    BoardPageComponent,
+    BoardTitleComponent,
+    ModalConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +33,10 @@ import { ModalNewBoardComponent } from './components/modal-new-board/modal-new-b
     BrowserAnimationsModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
-  entryComponents: [ModalNewBoardComponent],
+  entryComponents: [
+    ModalNewBoardComponent,
+    ModalConfirmComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

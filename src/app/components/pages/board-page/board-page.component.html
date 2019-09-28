@@ -1,0 +1,16 @@
+<div class="board-wrapper">
+  <div class="board-header">
+    <div class="menu">
+      <app-board-title
+        (titleChange)="changeBoard($event)"
+        [title]="board?.title"
+      ></app-board-title>
+      <div class="divider"></div>
+      <button class="share-button">Share</button>
+    </div>
+
+    <button class="delete" (click)="openDialog()">
+      Delete board
+    </button>
+  </div>
+</div>

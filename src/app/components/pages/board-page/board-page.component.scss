@@ -1,0 +1,46 @@
+.board-wrapper {
+  background-color: #2379bf;
+  padding: 8px;
+  font-family: 'Ubuntu', sans-serif;
+  min-height: calc(100vh - 40px);
+
+  .board-header {
+    display: flex;
+    justify-content: space-between;
+
+    .menu {
+      display: flex;
+      align-items: center;
+    }
+
+    .delete, .share-button {
+      border: 0;
+      border-radius: 3px;
+      outline: none;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 35px;
+      color: #ffffff;
+      padding: 0 12px;
+      cursor: pointer;
+      background-color: transparent;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+      }
+
+      &:active {
+        background-color: rgba(255, 255, 255, 0.35);
+      }
+    }
+  }
+
+  .divider {
+    display: inline-block;
+    width: 1px;
+    height: 50%;
+    margin: 0 10px;
+    background-color: rgba(255, 255, 255, .3);
+  }
+
+}
