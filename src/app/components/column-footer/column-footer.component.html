@@ -1,0 +1,20 @@
+<div class="column-footer">
+
+  <div class="add-dialog" *ngIf="addDialog">
+    <textarea
+      #txt
+      rows="3"
+      placeholder="Enter title of the card"
+    ></textarea>
+    <div class="buttons">
+      <button class="add" (click)="addTask()">Add card</button>
+      <button class="close" (click)="hideAddDialog()">&times;</button>
+    </div>
+  </div>
+
+  <div class="add-button" (click)="showAddDialog()" *ngIf="!addDialog">
+    <span class="icon-add">+</span>
+    <span class="add-card">Add new card</span>
+  </div>
+
+</div>

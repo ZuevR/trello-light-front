@@ -17,9 +17,10 @@ export interface Board {
 export interface Task {
   id?: number;
   title: string;
-  position: number;
-  status: Status;
+  position?: number;
+  status?: Status;
   description?: string;
+  boardId: number;
 }
 
 export interface AuthResponse {

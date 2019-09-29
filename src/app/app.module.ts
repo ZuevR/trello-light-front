@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { WelcomePageComponent } from './components/pages/welcome-page/welcome-page.component';
 import { SharedModule } from './shared/shared.module';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
@@ -14,6 +15,7 @@ import { ModalNewBoardComponent } from './components/modal-new-board/modal-new-b
 import { BoardPageComponent } from './components/pages/board-page/board-page.component';
 import { BoardTitleComponent } from './components/board-title/board-title.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
+import { ColumnFooterComponent } from './components/column-footer/column-footer.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,15 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     ModalNewBoardComponent,
     BoardPageComponent,
     BoardTitleComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    ColumnFooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   entryComponents: [

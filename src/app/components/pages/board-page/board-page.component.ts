@@ -5,6 +5,7 @@ import { Board } from '../../../shared/interfaces';
 import { BoardService } from '../../../services/board.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-board-page',
@@ -20,6 +21,12 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   cSub: Subscription;
   board: Board;
   display = false;
+
+  artists = [
+    'Artist I - Davido',
+    'Artist II - Wizkid',
+    'Artist III - Burna Boy'
+  ];
 
   constructor(
     private boardService: BoardService,
@@ -86,6 +93,11 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         this.deleteBoard();
       }
     });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
+    moveItemInArray(this.artists, event.previousIndex, event.currentIndex);
   }
 
 }

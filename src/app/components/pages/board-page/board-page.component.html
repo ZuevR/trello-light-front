@@ -13,4 +13,57 @@
       Delete board
     </button>
   </div>
+
+  <!--  <div cdkDropList (cdkDropListDropped)="drop($event)">-->
+  <!--    <div class="pop" *ngFor="let artist of artists" cdkDrag>{{artist}}</div>-->
+  <!--  </div>-->
+  <!--  <pre>{{ artists | json }}</pre>-->
+
+  <div class="tasks">
+
+    <div class="column-wrapper">
+      <div class="column">
+        <div class="column-title">
+          To Do
+        </div>
+
+        <div class="column-cards">
+          <div class="card">
+            <div class="details">
+              <span>tdfgdfz</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="details">
+              <span>task 2</span>
+            </div>
+          </div>
+        </div>
+
+        <app-column-footer></app-column-footer>
+
+      </div>
+    </div>
+
+    <div class="column-wrapper">
+      <div class="column">
+        <div class="column-title">
+          In Progress
+        </div>
+        <app-column-footer></app-column-footer>
+      </div>
+
+    </div>
+
+    <div class="column-wrapper">
+      <div class="column">
+        <div class="column-title">
+          Done
+        </div>
+        <app-column-footer></app-column-footer>
+      </div>
+    </div>
+
+
+  </div>
 </div>

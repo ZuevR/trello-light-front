@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
-import { Board } from '../shared/interfaces';
+import { Board, Task } from '../shared/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class BoardService {
@@ -28,5 +28,9 @@ export class BoardService {
 
   deleteBoard(id: string) {
     return this.http.delete(`${ environment.host }/api/v1/boards/${ id }`);
+  }
+
+  addNewTask(task: Task) {
+    return this.http.post(`${ environment.host }/api/v1/tasks`, task);
   }
 }
