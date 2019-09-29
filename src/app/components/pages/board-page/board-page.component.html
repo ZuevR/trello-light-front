@@ -28,19 +28,17 @@
         </div>
 
         <div class="column-cards">
-          <div class="card">
+          <div class="card" *ngFor="let task of tasks">
             <div class="details">
-              <span>tdfgdfz</span>
-            </div>
-          </div>
-          <div class="card">
-            <div class="details">
-              <span>task 2</span>
+              <span>{{ task.title }}</span>
             </div>
           </div>
         </div>
 
-        <app-column-footer></app-column-footer>
+        <app-column-footer
+          [status]="'TODO'"
+          (title)="createNewTask($event)"
+        ></app-column-footer>
 
       </div>
     </div>
@@ -50,7 +48,7 @@
         <div class="column-title">
           In Progress
         </div>
-        <app-column-footer></app-column-footer>
+<!--        <app-column-footer></app-column-footer>-->
       </div>
 
     </div>
@@ -60,7 +58,7 @@
         <div class="column-title">
           Done
         </div>
-        <app-column-footer></app-column-footer>
+<!--        <app-column-footer></app-column-footer>-->
       </div>
     </div>
 

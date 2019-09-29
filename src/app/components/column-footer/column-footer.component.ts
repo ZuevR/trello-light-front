@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-column-footer',
@@ -7,14 +8,20 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class ColumnFooterComponent implements OnInit {
 
+  form: FormGroup;
+
   constructor() {
   }
 
+  @Input() status: string;
   @ViewChild('txt', { static: false }) textarea: ElementRef;
-
+  @Output() title: EventEmitter<object> = new EventEmitter<object>();
   addDialog = false;
 
   ngOnInit() {
+    this.form = new FormGroup({
+      title: new FormControl(null, Validators.required)
+    });
   }
 
   showAddDialog() {
@@ -32,7 +39,10 @@ export class ColumnFooterComponent implements OnInit {
     }, 0);
   }
 
-  addTask() {
-    console.log(this.textarea.nativeElement.value);
+  submit() {
+    const taskTitle = this.textarea.nativeElement.value.trim();
+    this.title.emit({ status: this.status, title: taskTitle });
+    this.form.reset();
+    this.hideAddDialog();
   }
 }

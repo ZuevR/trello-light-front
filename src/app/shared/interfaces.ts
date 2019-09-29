@@ -1,4 +1,3 @@
-enum Status { 'TODO', 'PROGRESS', 'DONE' }
 
 export interface User {
   id?: number;
@@ -18,9 +17,9 @@ export interface Task {
   id?: number;
   title: string;
   position?: number;
-  status?: Status;
+  status: string;
   description?: string;
-  boardId: number;
+  boardId: string;
 }
 
 export interface AuthResponse {

@@ -1,15 +1,18 @@
 <div class="column-footer">
 
   <div class="add-dialog" *ngIf="addDialog">
-    <textarea
-      #txt
-      rows="3"
-      placeholder="Enter title of the card"
-    ></textarea>
-    <div class="buttons">
-      <button class="add" (click)="addTask()">Add card</button>
-      <button class="close" (click)="hideAddDialog()">&times;</button>
-    </div>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+       <textarea
+         #txt
+         rows="3"
+         placeholder="Enter title of the card"
+         formControlName="title"
+       ></textarea>
+      <div class="buttons">
+        <button class="add" type="submit" [disabled]="form.invalid">Add card</button>
+        <button class="close" (click)="hideAddDialog()">&times;</button>
+      </div>
+    </form>
   </div>
 
   <div class="add-button" (click)="showAddDialog()" *ngIf="!addDialog">

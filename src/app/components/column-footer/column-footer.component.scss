@@ -44,6 +44,10 @@
         &:active {
           background-color: #49852e;
         }
+
+        &:disabled {
+          background-color:  rgba(81, 162, 70, 0.59);
+        }
       }
 
       .close {

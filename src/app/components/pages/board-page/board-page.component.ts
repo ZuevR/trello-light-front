@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { Board } from '../../../shared/interfaces';
-import { BoardService } from '../../../services/board.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+import { Board, Task } from '../../../shared/interfaces';
+import { BoardService } from '../../../services/board.service';
+import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
+import { TaskService } from '../../../services/task.service';
 
 @Component({
   selector: 'app-board-page',
@@ -14,13 +16,16 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
 
-  id: string;
   bSub: Subscription;
   dSub: Subscription;
   mSub: Subscription;
   cSub: Subscription;
+  tSub: Subscription;
+
+  id: string;
   board: Board;
   display = false;
+  tasks: Task[];
 
   artists = [
     'Artist I - Davido',
@@ -30,6 +35,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private boardService: BoardService,
+    private taskService: TaskService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog
@@ -41,6 +47,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
     this.bSub = this.boardService.getBoard(this.id).subscribe((board: Board) => {
       this.board = board;
+      this.tasks = board.tasks;
+      console.log(this.tasks);
     }, error => {
       if (error.status === 403) {
         this.router.navigate(['/boards']);
@@ -60,6 +68,9 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     }
     if (this.cSub) {
       this.cSub.unsubscribe();
+    }
+    if (this.tSub) {
+      this.tSub.unsubscribe();
     }
   }
 
@@ -100,4 +111,14 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     moveItemInArray(this.artists, event.previousIndex, event.currentIndex);
   }
 
+  createNewTask(event) {
+    const task: Task = {
+      boardId: this.id,
+      title: event.title,
+      status: event.status
+    };
+    this.tSub = this.taskService.addNewTask(task).subscribe((newTask: Task) => {
+      this.tasks.push(newTask);
+    });
+  }
 }
