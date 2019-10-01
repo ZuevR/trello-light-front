@@ -1,5 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDragEnter,
+  CdkDragExit,
+  CdkDragMove,
+  CdkDragSortEvent, CdkDragStart,
+  moveItemInArray,
+  transferArrayItem
+} from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -21,17 +29,14 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   mSub: Subscription;
   cSub: Subscription;
   tSub: Subscription;
+  ntSub: Subscription;
 
   id: string;
   board: Board;
   display = false;
-  tasks: Task[];
-
-  artists = [
-    'Artist I - Davido',
-    'Artist II - Wizkid',
-    'Artist III - Burna Boy'
-  ];
+  tasksTodo: Task[];
+  tasksProgress: Task[];
+  tasksDone: Task[];
 
   constructor(
     private boardService: BoardService,
@@ -47,8 +52,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
     this.bSub = this.boardService.getBoard(this.id).subscribe((board: Board) => {
       this.board = board;
-      this.tasks = board.tasks;
-      console.log(this.tasks);
+      this.separateTasks(board.tasks);
     }, error => {
       if (error.status === 403) {
         this.router.navigate(['/boards']);
@@ -71,6 +75,9 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     }
     if (this.tSub) {
       this.tSub.unsubscribe();
+    }
+    if (this.ntSub) {
+      this.ntSub.unsubscribe();
     }
   }
 
@@ -106,19 +113,78 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
-    moveItemInArray(this.artists, event.previousIndex, event.currentIndex);
+  drop(event: CdkDragDrop<Task[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+    this.setCurrentTaskStatus();
+  }
+
+  setCurrentTaskStatus() {
+    this.tasksTodo.forEach((task: Task, index) => {
+      task.status = 'TODO';
+      task.position = index + 1;
+    });
+    this.tasksProgress.forEach((task: Task, index) => {
+      task.status = 'PROGRESS';
+      task.position = index + 1;
+    });
+    this.tasksDone.forEach((task: Task, index) => {
+      task.status = 'DONE';
+      task.position = index + 1;
+    });
+    const newTasks: Task[] = [].concat(this.tasksTodo, this.tasksProgress, this.tasksDone);
+    this.ntSub = this.taskService.moveTask(newTasks).subscribe(result => {
+      console.log(result);
+    });
+  }
+
+  separateTasks(tasks: Task[]) {
+    this.tasksTodo = tasks.filter(task => task.status === 'TODO');
+    this.tasksProgress = tasks.filter(task => task.status === 'PROGRESS');
+    this.tasksDone = tasks.filter(task => task.status === 'DONE');
   }
 
   createNewTask(event) {
+
+    let length;
+    switch (event.status) {
+      case 'TODO':
+        length = this.tasksTodo.length;
+        break;
+      case 'PROGRESS':
+        length = this.tasksProgress.length;
+        break;
+      case 'DONE':
+        length = this.tasksDone.length;
+        break;
+    }
+
     const task: Task = {
       boardId: this.id,
       title: event.title,
-      status: event.status
+      status: event.status,
+      position: length + 1
     };
+
     this.tSub = this.taskService.addNewTask(task).subscribe((newTask: Task) => {
-      this.tasks.push(newTask);
+      switch (newTask.status) {
+        case 'TODO':
+          this.tasksTodo.push(newTask);
+          break;
+        case 'PROGRESS':
+          this.tasksProgress.push(newTask);
+          break;
+        case 'DONE':
+          this.tasksDone.push(newTask);
+          break;
+      }
     });
   }
+
 }

@@ -15,7 +15,7 @@ export class ColumnFooterComponent implements OnInit {
 
   @Input() status: string;
   @ViewChild('txt', { static: false }) textarea: ElementRef;
-  @Output() title: EventEmitter<object> = new EventEmitter<object>();
+  @Output() setTaskProps: EventEmitter<object> = new EventEmitter<object>();
   addDialog = false;
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class ColumnFooterComponent implements OnInit {
 
   submit() {
     const taskTitle = this.textarea.nativeElement.value.trim();
-    this.title.emit({ status: this.status, title: taskTitle });
+    this.setTaskProps.emit({ status: this.status, title: taskTitle });
     this.form.reset();
     this.hideAddDialog();
   }

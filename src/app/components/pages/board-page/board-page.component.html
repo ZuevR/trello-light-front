@@ -14,54 +14,89 @@
     </button>
   </div>
 
-  <!--  <div cdkDropList (cdkDropListDropped)="drop($event)">-->
-  <!--    <div class="pop" *ngFor="let artist of artists" cdkDrag>{{artist}}</div>-->
-  <!--  </div>-->
-  <!--  <pre>{{ artists | json }}</pre>-->
-
   <div class="tasks">
+    <div cdkDropListGroup>
 
-    <div class="column-wrapper">
-      <div class="column">
-        <div class="column-title">
-          To Do
-        </div>
+      <div class="column-wrapper">
+        <div class="column">
+          <div class="column-title">
+            To Do
+          </div>
 
-        <div class="column-cards">
-          <div class="card" *ngFor="let task of tasks">
-            <div class="details">
-              <span>{{ task.title }}</span>
+          <div
+            class="column-cards"
+            cdkDropList
+            [cdkDropListData]="tasksTodo"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <div class="card" *ngFor="let task of tasksTodo" cdkDrag>
+              <div class="details">
+                {{ task.title }}
+              </div>
             </div>
           </div>
+
+          <app-column-footer
+            [status]="'TODO'"
+            (setTaskProps)="createNewTask($event)"
+          ></app-column-footer>
+
         </div>
-
-        <app-column-footer
-          [status]="'TODO'"
-          (title)="createNewTask($event)"
-        ></app-column-footer>
-
-      </div>
-    </div>
-
-    <div class="column-wrapper">
-      <div class="column">
-        <div class="column-title">
-          In Progress
-        </div>
-<!--        <app-column-footer></app-column-footer>-->
       </div>
 
-    </div>
+      <div class="column-wrapper">
+        <div class="column">
+          <div class="column-title">
+            In Progress
+          </div>
 
-    <div class="column-wrapper">
-      <div class="column">
-        <div class="column-title">
-          Done
+          <div
+            class="column-cards"
+            cdkDropList
+            [cdkDropListData]="tasksProgress"
+            (cdkDropListDropped)="drop($event)">
+            <div class="card" *ngFor="let task of tasksProgress" cdkDrag>
+              <div class="details">
+                {{ task.title }}
+              </div>
+            </div>
+          </div>
+
+          <app-column-footer
+            [status]="'PROGRESS'"
+            (setTaskProps)="createNewTask($event)"
+          ></app-column-footer>
         </div>
-<!--        <app-column-footer></app-column-footer>-->
       </div>
-    </div>
 
+      <div class="column-wrapper">
+        <div class="column">
+          <div class="column-title">
+            Done
+          </div>
+
+          <div
+            class="column-cards"
+            cdkDropList
+            [cdkDropListData]="tasksDone"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <div class="card" *ngFor="let task of tasksDone" cdkDrag>
+              <div class="details">
+                {{ task.title }}
+              </div>
+            </div>
+          </div>
+
+          <app-column-footer
+            [status]="'DONE'"
+            (setTaskProps)="createNewTask($event)"
+          ></app-column-footer>
+        </div>
+      </div>
+
+    </div>
 
   </div>
+
 </div>

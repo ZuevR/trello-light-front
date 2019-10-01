@@ -13,4 +13,8 @@ export class TaskService {
   addNewTask(task: Task) {
     return this.http.post(`${ environment.host }/api/v1/tasks`, task);
   }
+
+  moveTask(tasks: Task[]) {
+    return this.http.post(`${ environment.host }/api/v1/tasks/moved`, tasks);
+  }
 }
