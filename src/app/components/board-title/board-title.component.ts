@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-board-title',
@@ -15,7 +15,7 @@ export class BoardTitleComponent implements OnInit, AfterViewChecked {
   display = false;
   componentWidth: number;
 
-  constructor() {
+  constructor(private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class BoardTitleComponent implements OnInit, AfterViewChecked {
   }
 
   setInputWidth() {
-    this.input.nativeElement.style.width = this.componentWidth + 'px';
+    this.renderer.setStyle(this.input.nativeElement, 'width', this.componentWidth + 'px');
   }
 
   focusInput() {

@@ -1,0 +1,164 @@
+@font-face {
+  font-family: 'trelloicons';
+  src: url('../../../assets/fonts/trellicon.ttf') format('opentype');
+  font-style: normal;
+  font-weight: normal;
+}
+
+.modal-task {
+  position: relative;
+
+  .header, .description {
+    padding: 35px 0 0 15px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #172b4d;
+
+      span {
+        padding-left: 5px;
+      }
+
+      .window-header-icon {
+        display: inline-block;
+        font-family: 'trelloicons';
+        font-size: 28px;
+
+        &:before {
+          content: "\E910";
+        }
+      }
+
+      input {
+        padding: 2px 5px;
+        border: 0;
+        outline: none;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 20px;
+        font-weight: 500;
+        color: #172b4d;
+        box-shadow: inset 0 0 0 2px #0079bf;
+      }
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 35px;
+    color: #091e42;
+    height: 40px;
+    width: 40px;
+    transition: all .1s linear;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(9, 30, 66, .08);
+      color: #42526e;
+    }
+  }
+
+  .description {
+    margin-bottom: 15px;
+
+    .title {
+      font-size: 18px;
+      font-weight: 400;
+
+      .window-header-icon {
+        display: inline-block;
+        font-family: 'trelloicons';
+        font-size: 28px;
+
+        &:before {
+          content: "\E91D";
+        }
+      }
+    }
+
+    textarea {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 17px;
+      resize: none;
+      margin: 15px 0 0 38px;
+      padding: 8px 12px;
+      background-color: rgba(9, 30, 66, .04);
+      border: none;
+      outline: none;
+      border-radius: 3px;
+      display: block;
+      min-height: 40px;
+
+      &:focus {
+        background-color: #ffffff;
+        box-shadow: inset 0 0 0 2px #0079bf;
+      }
+    }
+
+    form {
+      position: relative;
+
+      .content {
+        font-family: 'Ubuntu', sans-serif;
+        color: #172b4d;
+        margin: 15px 0 0 38px;
+        max-width: 400px;
+      }
+    }
+
+    .save, .delete {
+      margin: 8px 0 0 38px;
+      padding: 6px 12px;
+      outline: none;
+      border: 0;
+      border-radius: 3px;
+      background-color: #5aac44;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 16px;
+      color: #fff;
+      transition: all .1s linear;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #61bd4f;
+      }
+
+      &:active {
+        background-color: #49852e;
+      }
+
+      &:disabled {
+        background-color: rgba(90, 172, 68, 0.38);
+      }
+
+    }
+
+    .delete {
+      position: absolute;
+      bottom: 0;
+      right: 48px;
+      background-color: #c50000;
+
+      &:hover {
+        background-color: #e10000;
+      }
+
+      &:active {
+        background-color: darkred;
+      }
+    }
+  }
+
+}

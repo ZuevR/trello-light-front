@@ -14,7 +14,7 @@ export interface Board {
 }
 
 export interface Task {
-  id?: number;
+  id?: string;
   title: string;
   position?: number;
   status: string;

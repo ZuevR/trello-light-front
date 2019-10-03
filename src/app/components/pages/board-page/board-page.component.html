@@ -29,11 +29,7 @@
             [cdkDropListData]="tasksTodo"
             (cdkDropListDropped)="drop($event)"
           >
-            <div class="card" *ngFor="let task of tasksTodo" cdkDrag>
-              <div class="details">
-                {{ task.title }}
-              </div>
-            </div>
+            <app-task *ngFor="let task of tasksTodo" [task]="task" (taskOnRemove)="removeTask($event)" cdkDrag></app-task>
           </div>
 
           <app-column-footer
@@ -55,11 +51,7 @@
             cdkDropList
             [cdkDropListData]="tasksProgress"
             (cdkDropListDropped)="drop($event)">
-            <div class="card" *ngFor="let task of tasksProgress" cdkDrag>
-              <div class="details">
-                {{ task.title }}
-              </div>
-            </div>
+            <app-task *ngFor="let task of tasksProgress" [task]="task" (taskOnRemove)="removeTask($event)" cdkDrag></app-task>
           </div>
 
           <app-column-footer
@@ -81,11 +73,7 @@
             [cdkDropListData]="tasksDone"
             (cdkDropListDropped)="drop($event)"
           >
-            <div class="card" *ngFor="let task of tasksDone" cdkDrag>
-              <div class="details">
-                {{ task.title }}
-              </div>
-            </div>
+            <app-task *ngFor="let task of tasksDone" [task]="task" (taskOnRemove)="removeTask($event)" cdkDrag></app-task>
           </div>
 
           <app-column-footer

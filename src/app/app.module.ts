@@ -16,6 +16,8 @@ import { BoardPageComponent } from './components/pages/board-page/board-page.com
 import { BoardTitleComponent } from './components/board-title/board-title.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { ColumnFooterComponent } from './components/column-footer/column-footer.component';
+import { TaskComponent } from './components/task/task.component';
+import { ModalTaskDetailsComponent } from './components/modal-task-details/modal-task-details.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { ColumnFooterComponent } from './components/column-footer/column-footer.
     BoardPageComponent,
     BoardTitleComponent,
     ModalConfirmComponent,
-    ColumnFooterComponent
+    ColumnFooterComponent,
+    TaskComponent,
+    ModalTaskDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,8 @@ import { ColumnFooterComponent } from './components/column-footer/column-footer.
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   entryComponents: [
     ModalNewBoardComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    ModalTaskDetailsComponent
   ],
   bootstrap: [AppComponent]
 })

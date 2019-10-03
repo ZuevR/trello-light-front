@@ -1,0 +1,45 @@
+<div class="modal-task">
+
+  <div class="header">
+    <div class="title">
+      <span class="window-header-icon"></span>
+      <span (click)="showInput()" *ngIf="!display">{{ task.title }}</span>
+      <input
+        #inp
+        *ngIf="display"
+        (blur)="saveTitle()"
+        (keyup.enter)="saveTitle()"
+        type="text"
+      >
+    </div>
+  </div>
+
+  <button class="close" [mat-dialog-close]="false">&times;</button>
+
+  <div class="description">
+    <div class="title">
+      <span class="window-header-icon"></span>
+      <span>Description</span>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <textarea
+        #txt
+        *ngIf="displayArea"
+        (blur)="hideArea()"
+        cols="50" rows="5"
+        placeholder="Add task description"
+        formControlName="description"
+      >
+      </textarea>
+      <button *ngIf="displayArea" class="save" type="submit" [disabled]="form.invalid">Save</button>
+
+      <div class="content" *ngIf="!displayArea" (click)="showArea()">{{ task.description }}</div>
+
+      <button class="delete" type="button" [mat-dialog-close]="'delete'">Delete task</button>
+    </form>
+
+
+  </div>
+
+</div>

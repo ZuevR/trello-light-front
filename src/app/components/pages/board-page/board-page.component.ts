@@ -1,13 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  CdkDragDrop,
-  CdkDragEnter,
-  CdkDragExit,
-  CdkDragMove,
-  CdkDragSortEvent, CdkDragStart,
-  moveItemInArray,
-  transferArrayItem
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -187,4 +179,19 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  removeTask(task: Task) {
+    this.taskService.removeTask(task.id).subscribe(result => {
+      switch (task.status) {
+        case 'TODO':
+          this.tasksTodo = this.tasksTodo.filter(item => item.id !== task.id);
+          break;
+        case 'PROGRESS':
+          this.tasksProgress = this.tasksProgress.filter(item => item.id !== task.id);
+          break;
+        case 'DONE':
+          this.tasksDone = this.tasksDone.filter(item => item.id !== task.id);
+          break;
+      }
+    });
+  }
 }
