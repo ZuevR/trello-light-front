@@ -18,6 +18,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
 import { ColumnFooterComponent } from './components/column-footer/column-footer.component';
 import { TaskComponent } from './components/task/task.component';
 import { ModalTaskDetailsComponent } from './components/modal-task-details/modal-task-details.component';
+import { ModalShareComponent } from './components/modal-share/modal-share.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ModalTaskDetailsComponent } from './components/modal-task-details/modal
     ModalConfirmComponent,
     ColumnFooterComponent,
     TaskComponent,
-    ModalTaskDetailsComponent
+    ModalTaskDetailsComponent,
+    ModalShareComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { ModalTaskDetailsComponent } from './components/modal-task-details/modal
   entryComponents: [
     ModalNewBoardComponent,
     ModalConfirmComponent,
-    ModalTaskDetailsComponent
+    ModalTaskDetailsComponent,
+    ModalShareComponent
   ],
   bootstrap: [AppComponent]
 })

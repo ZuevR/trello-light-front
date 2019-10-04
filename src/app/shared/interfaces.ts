@@ -7,9 +7,9 @@ export interface User {
 }
 
 export interface Board {
-  id?: number;
+  id?: string;
   title: string;
-  ownerId?: number;
+  ownerId?: string;
   tasks?: Array<Task>;
 }
 

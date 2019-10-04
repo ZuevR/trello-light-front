@@ -8,6 +8,7 @@ import { Board, Task } from '../../../shared/interfaces';
 import { BoardService } from '../../../services/board.service';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 import { TaskService } from '../../../services/task.service';
+import { ModalShareComponent } from '../../modal-share/modal-share.component';
 
 @Component({
   selector: 'app-board-page',
@@ -22,6 +23,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   cSub: Subscription;
   tSub: Subscription;
   ntSub: Subscription;
+  sSub: Subscription;
 
   id: string;
   board: Board;
@@ -192,6 +194,29 @@ export class BoardPageComponent implements OnInit, OnDestroy {
           this.tasksDone = this.tasksDone.filter(item => item.id !== task.id);
           break;
       }
+    });
+  }
+
+  openShareDialog(): void {
+    const dialogRef = this.dialog.open(ModalShareComponent, {
+      width: '350px',
+      panelClass: 'modal-share'
+    });
+
+    this.sSub = dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.shareBoard(result);
+      }
+    });
+  }
+
+  shareBoard(email: string) {
+    const data = {
+      id: this.board.id,
+      email
+    };
+    this.boardService.shareBoard(data).subscribe(result => {
+      console.log(result);
     });
   }
 }

@@ -20,7 +20,6 @@ export class ModalTaskDetailsComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    public dialogRef: MatDialogRef<ModalTaskDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { task: Task }
   ) {
   }
@@ -89,8 +88,10 @@ export class ModalTaskDetailsComponent implements OnInit {
   }
 
   hideArea() {
-    setTimeout(() => {
-      this.displayArea = false;
-    }, 200);
+    if (!!this.task.description) {
+      setTimeout(() => {
+        this.displayArea = false;
+      }, 200);
+    }
   }
 }

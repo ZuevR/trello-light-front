@@ -30,7 +30,7 @@ export class BoardService {
     return this.http.delete(`${ environment.host }/api/v1/boards/${ id }`);
   }
 
-  addNewTask(task: Task) {
-    return this.http.post(`${ environment.host }/api/v1/tasks`, task);
+  shareBoard(data: { id: string, email: string }) {
+    return this.http.post(`${ environment.host }/api/v1/boards/share`, data);
   }
 }
