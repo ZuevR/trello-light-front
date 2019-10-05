@@ -55,7 +55,7 @@
       </form>
       <div class="social-login" *ngIf="!showSuccess">
         <div class="or">or</div>
-        <button class="social-btn">
+        <button class="social-btn" (click)="signInWithGoogle()">
           <img
             src="https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.53/static/media/google-logo.c21ca9d1.svg"
             alt=""

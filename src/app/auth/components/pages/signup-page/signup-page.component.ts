@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
-
+import { AuthService as Social, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { AuthResponse, User } from '../../../../shared/interfaces';
 
@@ -27,6 +27,7 @@ export class SignupPageComponent implements OnInit {
   userEmail: string;
 
   constructor(
+    public socialAuthService: Social,
     public authService: AuthService,
     private router: Router
   ) {
@@ -73,6 +74,21 @@ export class SignupPageComponent implements OnInit {
 
   goHome() {
     this.router.navigate(['/']);
+  }
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then((user) => {
+        this.requestSocialUser(user);
+      });
+  }
+
+  requestSocialUser(socialUser) {
+    this.authService.socialAuth(socialUser).subscribe(result => {
+      this.router.navigate([`/boards`]);
+    }, error => {
+      console.log(error);
+    });
   }
 
 }

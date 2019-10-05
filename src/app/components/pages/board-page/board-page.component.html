@@ -20,7 +20,8 @@
       <div class="column-wrapper">
         <div class="column">
           <div class="column-title">
-            To Do
+            <span>To Do</span>
+            <button class="sort-btn" (click)="sortByName('TODO')">A-Z</button>
           </div>
 
           <div
@@ -43,7 +44,8 @@
       <div class="column-wrapper">
         <div class="column">
           <div class="column-title">
-            In Progress
+            <span>In Progress</span>
+            <button class="sort-btn" (click)="sortByName('PROGRESS')">A-Z</button>
           </div>
 
           <div
@@ -64,7 +66,8 @@
       <div class="column-wrapper">
         <div class="column">
           <div class="column-title">
-            Done
+            <span>Done</span>
+            <button class="sort-btn" (click)="sortByName('DONE')">A-Z</button>
           </div>
 
           <div
@@ -84,7 +87,5 @@
       </div>
 
     </div>
-
   </div>
-
 </div>

@@ -7,9 +7,10 @@
          rows="3"
          placeholder="Enter title of the card"
          formControlName="title"
+         (blur)="handleBlur($event)"
        ></textarea>
       <div class="buttons">
-        <button class="add" type="submit" [disabled]="form.invalid">Add card</button>
+        <button #btn class="add" type="submit" [disabled]="form.invalid">Add card</button>
         <button class="close" type="button" (click)="hideAddDialog()">&times;</button>
       </div>
     </form>

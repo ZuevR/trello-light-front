@@ -71,6 +71,8 @@
       white-space: normal;
 
       &-title {
+        display: flex;
+        justify-content: space-between;
         font-weight: 500;
         padding: 11px 8px;
         min-height: 20px;
@@ -86,6 +88,24 @@
         min-height: 30px;
 
       }
+    }
+  }
+
+  .sort-btn {
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+    background-color: transparent;
+    transition: all .1s linear;
+
+    &:hover {
+      border-color: #0079bf;
+    }
+
+    &:active {
+      background-color: #0079bf;
     }
   }
 }

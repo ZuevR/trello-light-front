@@ -32,6 +32,13 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   tasksProgress: Task[];
   tasksDone: Task[];
 
+  order = {
+    sortT: false,
+    sortP: false,
+    sortD: false
+  };
+
+
   constructor(
     private boardService: BoardService,
     private taskService: TaskService,
@@ -89,7 +96,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   deleteBoard() {
     this.dSub = this.boardService.deleteBoard(this.id).subscribe(result => {
       this.router.navigate(['/boards']);
-      console.log(result);
     }, error => {
       console.log(error);
     });
@@ -217,6 +223,37 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     };
     this.boardService.shareBoard(data).subscribe(result => {
       console.log(result);
+    }, err => {
+      console.log(err);
     });
   }
+
+  sortByName(status: string) {
+    switch (status) {
+      case 'TODO': {
+        this.sortTasks(this.tasksTodo, this.order.sortT);
+        this.order.sortT = !this.order.sortT;
+        break;
+      }
+      case 'PROGRESS': {
+        this.sortTasks(this.tasksProgress, this.order.sortP);
+        this.order.sortP = !this.order.sortP;
+        break;
+      }
+      case 'DONE': {
+        this.sortTasks(this.tasksDone, this.order.sortD);
+        this.order.sortD = !this.order.sortD;
+        break;
+      }
+    }
+  }
+
+  sortTasks(tasks: Task[], order: boolean) {
+    order ? tasks.sort((taskA, taskB) => {
+      return taskB.title.localeCompare(taskA.title, undefined, { sensitivity: 'accent' });
+    }) : tasks.sort((taskA, taskB) => {
+      return taskA.title.localeCompare(taskB.title, undefined, { sensitivity: 'accent' });
+    });
+  }
+
 }

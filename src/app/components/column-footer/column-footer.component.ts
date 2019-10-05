@@ -15,6 +15,7 @@ export class ColumnFooterComponent implements OnInit {
 
   @Input() status: string;
   @ViewChild('txt', { static: false }) textarea: ElementRef;
+  @ViewChild('btn', { static: false }) button: ElementRef;
   @Output() setTaskProps: EventEmitter<object> = new EventEmitter<object>();
   addDialog = false;
 
@@ -44,5 +45,11 @@ export class ColumnFooterComponent implements OnInit {
     this.setTaskProps.emit({ status: this.status, title: taskTitle });
     this.form.reset();
     this.hideAddDialog();
+  }
+
+  handleBlur(event: FocusEvent) {
+    if (event.relatedTarget !== this.button.nativeElement) {
+      this.hideAddDialog();
+    }
   }
 }

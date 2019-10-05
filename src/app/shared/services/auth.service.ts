@@ -67,4 +67,11 @@ export class AuthService {
     this.error$.next(message);
     return throwError(error);
   }
+
+  socialAuth(socialUser): Observable<any> {
+    return this.http.post(`${environment.host}/api/v1/auth/social-auth`, socialUser)
+      .pipe(
+        tap(this.setToken)
+      );
+  }
 }
