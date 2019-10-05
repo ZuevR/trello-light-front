@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+
 import { Board } from '../../../shared/interfaces';
 import { BoardService } from '../../../services/board.service';
 import { ModalNewBoardComponent } from '../../modal-new-board/modal-new-board.component';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',

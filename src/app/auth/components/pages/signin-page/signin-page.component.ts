@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../../../shared/services/auth.service';
 import { SuccessMessageComponent } from '../../success-message/success-message.component';
 import { FailureMessageComponent } from '../../failure-message/failure-message.component';
 import { AuthResponse, User } from '../../../../shared/interfaces';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-signin-page',

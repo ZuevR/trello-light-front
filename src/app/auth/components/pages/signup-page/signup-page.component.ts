@@ -3,9 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AuthService as Social, GoogleLoginProvider } from 'angularx-social-login';
+import { Subscription } from 'rxjs';
+
 import { AuthService } from '../../../../shared/services/auth.service';
 import { AuthResponse, User } from '../../../../shared/interfaces';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-signup-page',

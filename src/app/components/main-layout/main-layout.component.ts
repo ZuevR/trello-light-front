@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { AuthService } from '../../shared/services/auth.service';
 import { User } from '../../shared/interfaces';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main-layout',

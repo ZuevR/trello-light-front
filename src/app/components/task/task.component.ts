@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Subscription } from 'rxjs';
+
 import { Task } from '../../shared/interfaces';
 import { ModalTaskDetailsComponent } from '../modal-task-details/modal-task-details.component';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-task',

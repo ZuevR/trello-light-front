@@ -5,7 +5,6 @@ import { WelcomePageComponent } from './components/pages/welcome-page/welcome-pa
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { MainPageComponent } from './components/pages/main-page/main-page.component';
 import { BoardPageComponent } from './components/pages/board-page/board-page.component';
-
 import { AuthGuard } from './shared/auth.guard';
 import { NotAuthGuard } from './shared/not-auth.guard';
 
