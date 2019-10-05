@@ -70,7 +70,7 @@ export class AuthService {
     return this.http.post(`${ environment.host }/api/v1/auth/new-email`, { id });
   }
 
-  private setToken(response: AuthResponse | null) {
+  setToken(response: AuthResponse | null) {
     if (response) {
       const expDate = new Date(response.auth_key.exp * 1000);
       localStorage.setItem('token', response.auth_key.id);

@@ -1,15 +1,16 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../shared/interfaces';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modal-task-details',
   templateUrl: './modal-task-details.component.html',
   styleUrls: ['./modal-task-details.component.scss']
 })
-export class ModalTaskDetailsComponent implements OnInit {
+export class ModalTaskDetailsComponent implements OnInit, OnDestroy {
 
   @ViewChild('inp', { static: false }) input: ElementRef;
   @ViewChild('txt', { static: false }) textarea: ElementRef;
@@ -17,6 +18,8 @@ export class ModalTaskDetailsComponent implements OnInit {
   displayArea = true;
   task: Task;
   form: FormGroup;
+  tSub: Subscription;
+  dSub: Subscription;
 
   constructor(
     private taskService: TaskService,
@@ -31,6 +34,15 @@ export class ModalTaskDetailsComponent implements OnInit {
     });
     this.task = this.data.task;
     this.displayArea = !this.task.description;
+  }
+
+  ngOnDestroy(): void {
+    if (this.tSub) {
+      this.tSub.unsubscribe();
+    }
+    if (this.dSub) {
+      this.dSub.unsubscribe();
+    }
   }
 
   showInput() {
@@ -54,7 +66,7 @@ export class ModalTaskDetailsComponent implements OnInit {
         status: this.task.status,
         title: newTitle
       };
-      this.taskService.changeTaskTitle(task).subscribe((result: Task) => {
+      this.tSub = this.taskService.changeTaskTitle(task).subscribe((result: Task) => {
         this.task.title = result.title;
       });
     }
@@ -71,7 +83,7 @@ export class ModalTaskDetailsComponent implements OnInit {
       description
     };
 
-    this.taskService.changeTaskDescription(task).subscribe((result: Task) => {
+    this.dSub = this.taskService.changeTaskDescription(task).subscribe((result: Task) => {
       this.task.description = result.description;
     });
 

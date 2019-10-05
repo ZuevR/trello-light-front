@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { AuthResponse } from '../../../shared/interfaces';
 import { AuthService } from '../../../shared/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-failure-message',
@@ -19,10 +20,11 @@ import { AuthService } from '../../../shared/services/auth.service';
     ])
   ]
 })
-export class FailureMessageComponent implements OnInit {
+export class FailureMessageComponent implements OnInit, OnDestroy {
 
   submit = false;
   userEmail: string;
+  sub: Subscription;
 
   constructor(
     private router: Router,
@@ -35,12 +37,18 @@ export class FailureMessageComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
+
   closeDialog() {
     this.dialogRef.close();
   }
 
   sendVerificationEmail() {
-    this.authService.requestNewEmail(this.data.id).subscribe((response: AuthResponse) => {
+    this.sub = this.authService.requestNewEmail(this.data.id).subscribe((response: AuthResponse) => {
       this.userEmail = response.email;
       this.submit = true;
     }, error => {

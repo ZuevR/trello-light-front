@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,16 +7,19 @@ import { AuthService } from '../../../../shared/services/auth.service';
 import { SuccessMessageComponent } from '../../success-message/success-message.component';
 import { FailureMessageComponent } from '../../failure-message/failure-message.component';
 import { AuthResponse, User } from '../../../../shared/interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-signin-page',
   templateUrl: './signin-page.component.html',
   styleUrls: ['./signin-page.component.scss']
 })
-export class SigninPageComponent implements OnInit {
+export class SigninPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   submitting = false;
+  sub: Subscription;
+  rSub: Subscription;
 
   constructor(
     public authService: AuthService,
@@ -27,7 +30,7 @@ export class SigninPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.rSub = this.route.queryParams.subscribe((params: Params) => {
       const regStatus = params.status;
       const userId = +params.userId;
       this.openDialog(regStatus, userId);
@@ -37,6 +40,15 @@ export class SigninPageComponent implements OnInit {
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required)
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+    if (this.rSub) {
+      this.rSub.unsubscribe();
+    }
   }
 
   openDialog(status: string, id: number): void {
@@ -63,7 +75,7 @@ export class SigninPageComponent implements OnInit {
       password: this.form.get('password').value
     };
 
-    this.authService.login(user).subscribe((response: AuthResponse) => {
+    this.sub = this.authService.login(user).subscribe((response: AuthResponse) => {
       this.form.reset();
       this.router.navigate([`/boards`]);
       this.submitting = false;

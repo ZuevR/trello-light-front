@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AuthService as Social, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { AuthResponse, User } from '../../../../shared/interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-signup-page',
@@ -19,12 +20,14 @@ import { AuthResponse, User } from '../../../../shared/interfaces';
     ])
   ]
 })
-export class SignupPageComponent implements OnInit {
+export class SignupPageComponent implements OnInit, OnDestroy {
 
   showSuccess = false;
   form: FormGroup;
   submitting = false;
   userEmail: string;
+  sub: Subscription;
+  sSub: Subscription;
 
   constructor(
     public socialAuthService: Social,
@@ -50,6 +53,15 @@ export class SignupPageComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+    if (this.sSub) {
+      this.sSub.unsubscribe();
+    }
+  }
+
   submit() {
     if (this.form.invalid) {
       return;
@@ -62,7 +74,7 @@ export class SignupPageComponent implements OnInit {
       password: this.form.get('password').value
     };
 
-    this.authService.signUp(user).subscribe((response: AuthResponse) => {
+    this.sub = this.authService.signUp(user).subscribe((response: AuthResponse) => {
       this.form.reset();
       this.submitting = false;
       this.userEmail = response.email;
@@ -84,7 +96,7 @@ export class SignupPageComponent implements OnInit {
   }
 
   requestSocialUser(socialUser) {
-    this.authService.socialAuth(socialUser).subscribe(result => {
+    this.sSub = this.authService.socialAuth(socialUser).subscribe(result => {
       this.router.navigate([`/boards`]);
     }, error => {
       console.log(error);

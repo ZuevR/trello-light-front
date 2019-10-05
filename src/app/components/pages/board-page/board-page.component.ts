@@ -24,6 +24,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   tSub: Subscription;
   ntSub: Subscription;
   sSub: Subscription;
+  rSub: Subscription;
+  shSub: Subscription;
 
   id: string;
   board: Board;
@@ -80,13 +82,18 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     if (this.ntSub) {
       this.ntSub.unsubscribe();
     }
+    if (this.rSub) {
+      this.rSub.unsubscribe();
+    }
+    if (this.shSub) {
+      this.shSub.unsubscribe();
+    }
   }
 
   changeBoard(newTitle: string) {
     const oldTitle = this.board.title;
     this.board.title = newTitle;
-    this.cSub = this.boardService.changeBoard(this.board).subscribe(result => {
-      console.log(result);
+    this.cSub = this.boardService.changeBoard(this.board).subscribe(() => {
     }, error => {
       console.log(error);
       this.board.title = oldTitle;
@@ -94,7 +101,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   }
 
   deleteBoard() {
-    this.dSub = this.boardService.deleteBoard(this.id).subscribe(result => {
+    this.dSub = this.boardService.deleteBoard(this.id).subscribe(() => {
       this.router.navigate(['/boards']);
     }, error => {
       console.log(error);
@@ -139,8 +146,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       task.position = index + 1;
     });
     const newTasks: Task[] = [].concat(this.tasksTodo, this.tasksProgress, this.tasksDone);
-    this.ntSub = this.taskService.moveTask(newTasks).subscribe(result => {
-      console.log(result);
+    this.ntSub = this.taskService.moveTask(newTasks).subscribe(() => {
     });
   }
 
@@ -188,7 +194,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   }
 
   removeTask(task: Task) {
-    this.taskService.removeTask(task.id).subscribe(result => {
+    this.rSub = this.taskService.removeTask(task.id).subscribe(result => {
       switch (task.status) {
         case 'TODO':
           this.tasksTodo = this.tasksTodo.filter(item => item.id !== task.id);
@@ -221,8 +227,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       id: this.board.id,
       email
     };
-    this.boardService.shareBoard(data).subscribe(result => {
-      console.log(result);
+    this.shSub = this.boardService.shareBoard(data).subscribe(() => {
     }, err => {
       console.log(err);
     });

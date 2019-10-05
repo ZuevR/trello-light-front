@@ -1,5 +1,5 @@
 <h1>Invite to the board</h1>
 <form [formGroup]="form" (ngSubmit)="submit()">
-  <input type="email" formControlName="email">
+  <input type="email" placeholder="Enter user's email" formControlName="email">
   <button type="submit" [disabled]="form.invalid">Send invitation</button>
 </form>

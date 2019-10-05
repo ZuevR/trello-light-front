@@ -18,6 +18,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   boards: Board[];
   dSub: Subscription;
   bSub: Subscription;
+  sub: Subscription;
 
   constructor(
     public boardService: BoardService,
@@ -26,9 +27,8 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.boardService.getAllBoards().subscribe((response: Board[]) => {
+    this.sub = this.boardService.getAllBoards().subscribe((response: Board[]) => {
       this.boards = response;
-      console.log(this.boards);
     });
 
     this.form = new FormGroup({
@@ -42,6 +42,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
     }
     if (this.dSub) {
       this.dSub.unsubscribe();
+    }
+    if (this.sub) {
+      this.sub.unsubscribe();
     }
   }
 
