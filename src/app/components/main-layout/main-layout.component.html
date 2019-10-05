@@ -3,7 +3,10 @@
   <div class="logo">
     <img src="../assets/images/header-logo-min.png" alt="logo">
   </div>
-  <div class="avatar"></div>
+  <div class="user">
+    <span>{{ userName }}</span>
+    <button class="trello-btn" (click)="logout()">Logout</button>
+  </div>
 </div>
 
 <router-outlet></router-outlet>

@@ -1,7 +1,7 @@
 .header {
   display: flex;
   background: #026aa7;
-  padding: 4px;
+  padding: 4px 8px;
   align-items: center;
   justify-content: space-between;
 
@@ -33,6 +33,20 @@
     img {
       display: block;
       max-height: 32px;
+    }
+  }
+
+  .user {
+    span {
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: 600;
+      color: #ffffff;
+      margin-right: 20px;
+    }
+
+    button {
+      font-weight: 400;
+      font-size: 14px;
     }
   }
 }

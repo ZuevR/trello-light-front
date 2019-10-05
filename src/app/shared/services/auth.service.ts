@@ -10,19 +10,32 @@ import { AuthResponse, User } from '../interfaces';
 export class AuthService {
 
   public error$: Subject<string> = new Subject<string>();
+  private currentUser: User;
 
   constructor(
     private http: HttpClient
   ) {
   }
 
+  set user(user: User) {
+    this.currentUser = user;
+  }
+
+  get user() {
+    return this.currentUser;
+  }
+
   get token(): string {
     const expDate = new Date(localStorage.getItem('token-exp'));
     if (new Date() > expDate) {
-      this.logout();
+      this.setToken(null);
       return null;
     }
     return localStorage.getItem('token');
+  }
+
+  getCurrentUser() {
+    return this.http.get(`${ environment.host }/api/v1/auth/user`);
   }
 
   signUp(user: User): Observable<any> {
@@ -36,12 +49,17 @@ export class AuthService {
     return this.http.post(`${ environment.host }/api/v1/auth/signin`, user)
       .pipe(
         tap(this.setToken),
+        tap(response => this.user = response),
         catchError(this.handleError.bind(this))
       );
   }
 
   logout() {
-    this.setToken(null);
+    return this.http.get(`${environment.host}/api/v1/auth/logout`)
+      .pipe(
+        tap(this.setToken),
+        tap(response => this.user = response)
+      );
   }
 
   isAuth(): boolean {
@@ -69,9 +87,10 @@ export class AuthService {
   }
 
   socialAuth(socialUser): Observable<any> {
-    return this.http.post(`${environment.host}/api/v1/auth/social-auth`, socialUser)
+    return this.http.post(`${ environment.host }/api/v1/auth/social-auth`, socialUser)
       .pipe(
-        tap(this.setToken)
+        tap(this.setToken),
+        tap(response => this.user = response)
       );
   }
 }
