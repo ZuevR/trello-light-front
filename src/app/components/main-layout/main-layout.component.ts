@@ -27,6 +27,9 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       this.uSub = this.authService.getCurrentUser().subscribe((user: User) => {
         this.authService.user = user;
         this.userName = this.authService.user.username;
+      }, error => {
+        this.authService.setToken(null);
+        this.router.navigate(['/']);
       });
     } else {
       this.userName = this.authService.user.username;
